@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+<div class="shadow text-center">
+<h3>DJBlog bloğuna Hoşgeldiniz</h3>
+<p>Bu blogta geliştirici olarak blog yazabilirsiniz.</p>
+</div>
+
+<p>
+    {% if request.user.is_authenticated %}
+        Giriş Yapılmış, {{request.user.username}}
+    {% else %}
+        Giriş Yapılmamış.
+    {% endif %}
+
+</p>
+
+{% endblock body %}

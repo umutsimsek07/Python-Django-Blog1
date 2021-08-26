@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+{% block body %}
+{% if articles %}
+    <div class="row justify-content-md-center">
+    <div class="col-lg-8 mb-4 col-md-auto">
+    <h3>MAKALELER</h3>
+    <form style ="float : right;">
+    {% csrf_token %}
+    <input  type="text" name = "keyword" class="input shadow" placeholder="Ara..." >
+    <button type="submit" class="btn btn-danger shadow">Ara</button>
+    </form>
+    </div>
+    </div>
+        {% for article in articles  %}
+        <div class="row justify-content-md-center">
+            <div class="col-lg-8 col-md-12">
+                        <!-- Post title-->
+                        <a href="{% url 'article:detail' article.id %}"><h2 class="fw-bolder mb-1">{{article.title}}</h2></a>
+                        <!-- Post meta content-->
+                        <div class="badge bg-secondary fst-italic mb-2">{{article.created_date}}</div>
+                        <div class="badge bg-secondary fst-italic mb-2">{{article.author.username}}</div>
+                    <!-- Preview image figure-->
+                            {% if article.article_image %}
+                            <a href="/articles/article/{{article.id}}"><img class="img-fluid rounded" src="{{article.article_image.url}}" alt=""></a>
+                            {% endif %}
+                    <!-- Post content-->
+                        <p class="lead">{{article.content|safe|truncatewords:50}}</p>
+                        <a style ="float : right;" href="{% url 'article:detail' article.id %}" class ="btn btn-danger">Devamını Oku</a>
+            </div>
+        </div>
+        {% endfor %}
+{% else %}
+<div class="row justify-content-md-center">
+<div class="col-lg-8 mb-4 col-md-auto">
+<form style ="float : right;">
+{% csrf_token %}
+<input  type="text" name = "keyword" class="input shadow" placeholder="Ara..." >
+<button type="submit" class="btn btn-danger shadow">Ara</button>
+</form>
+<h3>MAKALELER</h3>
+<div class="alert alert-danger">Bu blogta herhangi bir makale bulunmuyor!
+</div>
+</div>
+</div>
+{% endif %}
+
+{% endblock body %}
